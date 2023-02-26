@@ -1,7 +1,7 @@
 function solve(start, end) {
     let nums = [];
     let sum = 0;
-    for (i = start; i <= end; i++) {
+    for (let i = start; i <= end; i++) {
         sum += i
         nums.push(i)
     }
