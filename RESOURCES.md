@@ -13,3 +13,6 @@ http://www.jsfuck.com/
 #### Differences Between Var, Let, and Const
 https://www.youtube.com/watch?v=9WIJQDvt4Us
 
+#### JS Tutorial
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
+
