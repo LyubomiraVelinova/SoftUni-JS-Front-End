@@ -1,6 +1,8 @@
+// FIRST VAR
+
 function charactersInRange(firstChar, secondChar) {
-    let asciiCodeFirstChar = firstChar.charCodeAt();
-    let asciiCodeSecondChar = secondChar.charCodeAt();
+    let asciiCodeFirstChar = firstChar.charCodeAt(0);
+    let asciiCodeSecondChar = secondChar.charCodeAt(0);
     let smallestAsciiCode = Math.min(asciiCodeFirstChar, asciiCodeSecondChar);
     let biggestAsciiCode = Math.max(asciiCodeFirstChar, asciiCodeSecondChar);
     let result = [];

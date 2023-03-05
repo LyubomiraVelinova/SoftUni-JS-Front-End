@@ -1,6 +1,18 @@
-function addAndSubtract(firstNum, secondNum, thirdNum) {
+// FIRST VAR
+
+// function addAndSubtract(firstNum, secondNum, thirdNum) {
+//     const sum = (a, b) => a + b;
+//     const subtract = (a,b) => a - b;
+
+//     return subtract(sum(firstNum, secondNum), thirdNum);
+// }
+
+// SECOND VAR
+
+const addAndSubtract = (firstNum, secondNum, thirdNum) => {
     const sum = (a, b) => a + b;
-    const subtract = (a,b) => a - b;
+    const subtract = (a, b) => a - b;
+    
     return subtract(sum(firstNum, secondNum), thirdNum);
 }
 

@@ -1,20 +1,13 @@
-// function palindrome(integers) {
-//     let isPalindrome = false
-//     let result = [];
+// FIRST VAR
 
-//     integers.forEach(num => {
-//         for (let i = 0; i < num.length / 2; i++) {
-//             if (num[i] === num[num.length - 1 - i]) {
-//                 isPalindrome = true;
-//             } else {
-//                 isPalindrome = false;
-//             }
-//         }
-//         result.push(isPalindrome);
-//     });
-    
-//     console.log(result.join('\n'))
-// }
+function palindrome(numbers) {
+    const isPalindrome = (num) => Number([...num.toString()].reverse().join('')) === num;
+    return numbers
+        .map(isPalindrome)
+        .join('\n');
+}
+
+// FIRST VAR
 
 function palindrome(integers) {
         integers.forEach(num => {
