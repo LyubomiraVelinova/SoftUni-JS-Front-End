@@ -1,4 +1,5 @@
-function pointsValidation(x1, y1, x2, y2) {
+function pointsValidation(numbers) {
+    let [x1, y1, x2, y2] = [...numbers];
     console.log(isDistanceValid(x1, y1, 0, 0));
     console.log(isDistanceValid(x2, y2, 0, 0));
     console.log(isDistanceValid(x1, y1, x2, y2));
@@ -13,5 +14,5 @@ function pointsValidation(x1, y1, x2, y2) {
     }
 }
 
-pointsValidation(3, 0, 0, 4);
-pointsValidation(2, 1, 1, 1);
+pointsValidation([3, 0, 0, 4]);
+pointsValidation([2, 1, 1, 1]);
