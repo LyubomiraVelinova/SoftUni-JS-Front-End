@@ -1,3 +1,5 @@
+// FIRST VAR
+
 function addressBook(input) {
     let addressBookObj = {};
     for (const line of input) {
@@ -11,6 +13,27 @@ function addressBook(input) {
         console.log(`${name} -> ${addressBookObj[name]}`)
     }
 }
+
+// SECOND VAR
+
+function addressBook(arr) {
+    let addressBook = {}
+    for (const line of arr) {
+        let [key, value] = line.split(":");
+        addressBook[key] = value;
+    }
+    let entries = Object.entries(addressBook);
+    entries.sort((a, b) => {
+        let keyA = a[0];
+        let keyB = b[0];
+        return keyA.localeCompare(keyB);
+    })
+
+    for (const iterator of entries) {
+        console.log(`${iterator} -> ${addressBook[iterator]}`)
+    }
+}
+
 
 
 
