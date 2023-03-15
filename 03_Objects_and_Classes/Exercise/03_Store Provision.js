@@ -23,22 +23,45 @@
 
 // SECOND VAR
 
+// function storeProvision(stock, orderedProducts) {
+//     let combined = [...stock,...orderedProducts];
+//     let store = {};
+
+//     for (let index = 0; index < combined.length; index++) {
+//         let prop = combined[index];
+//         if (index % 2 === 0) {
+//             if (!store.hasOwnProperty(prop)) {
+//                 store[prop] = 0
+//             }
+//         } else {
+//             let value = Number(prop);
+//             let previousProp = combined[index - 1];
+//             store[previousProp] += value;
+//         }
+//     }
+//     for (const key in store) {
+//         console.log(`${key} -> ${store[key]}`);
+//     }
+// }
+
+// THIRD VAR
+
 function storeProvision(stock, orderedProducts) {
     let combined = [...stock,...orderedProducts];
-    let store = {};
-
-    for (let index = 0; index < combined.length; index++) {
-        let prop = combined[index];
+    let store = combined.reduce((data, currentValue, index) => {
+        let prop = currentValue;
         if (index % 2 === 0) {
-            if (!store.hasOwnProperty(prop)) {
-                store[prop] = 0
+            if (!data.hasOwnProperty(prop)) {
+                data[prop] = 0
             }
         } else {
             let value = Number(prop);
             let previousProp = combined[index - 1];
-            store[previousProp] += value;
+            data[previousProp] += value;
         }
-    }
+        return data;
+    }, {})
+
     for (const key in store) {
         console.log(`${key} -> ${store[key]}`);
     }

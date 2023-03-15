@@ -1,3 +1,5 @@
+// FIRST VAR
+
 function piccolo(input) {
     let carRecorder = {}
     input.forEach(line => {
@@ -16,6 +18,54 @@ function piccolo(input) {
         orderedByCarNumber.forEach(car => console.log(car));
     }
 }
+
+// SECOND VAR
+
+function piccolo(input) {
+    let carNumbers = [];
+
+    for (const line of input) {
+        let [direction, carNum] = line.split(', ');
+        if (direction === 'IN' && !carNumbers.includes(carNum)) {
+            carNumbers.push(carNum);
+        } else if (direction === 'OUT' && carNumbers.includes(carNum)) {
+            let index = carNumbers.indexOf(carNum);
+            carNumbers.splice(index, 1);
+        }
+    }
+
+    if (carNumbers.length === 0) {
+        console.log(`Parking Lot is Empty`);
+    } else {
+        let sortedNumbers = carNumbers.sort((carNumA, carNumB) => carNumA.localeCompare(carNumB));
+        sortedNumbers.forEach(car => console.log(car));
+    }
+}
+
+// THIRD VAR - set()
+
+function piccolo(input) {
+    let carNumbers = [];
+
+    for (const line of input) {
+        let [direction, carNum] = line.split(', ');
+        if (direction === 'IN' ) {
+            carNumbers.push(carNum);
+        } else if (direction === 'OUT') {
+            let index = carNumbers.indexOf(carNum);
+            carNumbers.splice(index, 1);
+        }
+    }
+    let uniqueElements = new Set(carNumbers);
+
+    if (uniqueElements.size === 0) {
+        console.log(`Parking Lot is Empty`);
+    } else {
+        let sortedNumbers = [...uniqueElements.keys()].sort((carNumA, carNumB) => carNumA.localeCompare(carNumB));
+        sortedNumbers.forEach(car => console.log(car));
+    }
+}
+
 
 piccolo(['IN, CA2844AA',
     'IN, CA1234TA',
