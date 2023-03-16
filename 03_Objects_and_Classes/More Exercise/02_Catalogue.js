@@ -1,38 +1,33 @@
 function catalogue(input) {
-    let groups = {};
-    input.sort((stringA, stringB) => {
-        return stringA.localeCompare(stringB);
-    });
+    let productsArr = input
+        .sort((stringA, stringB) => stringA.localeCompare(stringB))
+        .map((line) => line.split(' : '))
+    let productsObj = productsArr
+        .reduce((data, product) => {
+                data[product[0]] = Number(product[1]);
+                return data;
+            }, {})
     
-    let letter = ''
-    let currentArr = []
-    input.forEach(line => {
-        let currentLetter = line[0];
-        if (letter !== currentLetter) {
-            letter = currentLetter;
-            currentArr = []
+    let letter = '';
+    let dictionary = {};
+    let products = [];
+    for (const line of productsArr) {
+        let product = line[0];
+        let currentLetter = product[0];
+        if (letter !== currentLetter && productsArr.indexOf(line) !== 0 ) {
+            dictionary[letter] = products
+            products = [];
         }
-        currentArr.push(line);
-        groups[letter] = currentArr;
-    });
-
-    for (const [key, value] of Object.entries(groups)) {
-        console.log(key);
-        value.forEach(el => console.log(`  ${el}`))
+        letter = currentLetter;
+        products.push(product);
+        if (productsArr.indexOf(line) === productsArr.length - 1) {
+            dictionary[letter] = products;
+        }
     }
-
-    // let result = productsArr.reduce((data, product) => {
-    //     data[product[0]] = product[1];
-    //     return data;
-    // }, {})
-
-    // let groups = {};
-    // for (const [key,value] of Object.entries(result)) {
-    //     let keyFirstLetter = key[0];
-    //     groups[keyFirstLetter] = [].push([key, value]);
-
-    // }
-    // console.log(groups)
+    for (const [key, value] of Object.entries(dictionary)) {
+        console.log(key);
+        value.map((p) => console.log(`  ${p}: ${productsObj[p]}`))
+    }
 }
 
 catalogue([

@@ -49,13 +49,12 @@
 function storeProvision(stock, orderedProducts) {
     let combined = [...stock,...orderedProducts];
     let store = combined.reduce((data, currentValue, index) => {
-        let prop = currentValue;
         if (index % 2 === 0) {
-            if (!data.hasOwnProperty(prop)) {
-                data[prop] = 0
+            if (!data.hasOwnProperty(currentValue)) {
+                data[currentValue] = 0
             }
         } else {
-            let value = Number(prop);
+            let value = Number(currentValue);
             let previousProp = combined[index - 1];
             data[previousProp] += value;
         }

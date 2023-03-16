@@ -1,55 +1,43 @@
 function movies(input) {
-    let allMovies = [];
-    for (const line of input) {
-        let moviesInfo = {};
-        let currentArr = line.split(' ');
-        if (getMovieName(currentArr)) {
-            let movie = getMovieName(currentArr);
-            moviesInfo['name'] = movie;
-        } else if (getDirectorName(currentArr)) {
-            let movie = getDirectorName(currentArr)[0];
-            let director = getDirectorName(currentArr)[1];
-            if (moviesInfo['name'] === movie) {
-                moviesInfo['director'] = director;
+    let total = [];
+    let currentObj = {};
+    for (const element of input) {
+        line = element.split(' ');
+        if (line.includes('addMovie')) {
+            let movieName = line
+                .slice(1)
+                .join(' ');
+            currentObj.name = movieName;
+            total.push(currentObj);
+            currentObj = {};
+        } else if (line.includes('directedBy')) {
+            let [movie, director] = takeInfoByIndex(line, 'directedBy');
+            for (const object of total) {
+                if (object.name === movie) {
+                    object.director = director;
+                }
             }
-        } else if (getMovieDate(currentArr)) {
-            let movie = getMovieDate(currentArr)[0];
-            let date = getMovieDate(currentArr)[1];
-            if (moviesInfo['name'] === movie) {
-                moviesInfo['date'] = date;
+        } else if (line.includes('onDate')) {
+            let [movie, date] = takeInfoByIndex(line, 'onDate');
+            for (const object of total) {
+                if (object.name === movie) {
+                    object.date = date;
+                }
             }
         }
-        allMovies.push(moviesInfo);
-    }
-    console.log(allMovies);
-
-    function getMovieName(array) {
-        const COMMAND = 'addMovie';
-        if (array.includes(COMMAND)) {
-            array.shift();
-            let movieName = array.join(' ');
-            return movieName;
-        }
     }
 
-    function getDirectorName(array) {
-        const FIRST_SUBSTRING = 'directedBy';
-        if (array.includes(FIRST_SUBSTRING)) {
-            let index = array.indexOf(FIRST_SUBSTRING);
-            let movieName = array.slice(0, index);
-            let directorName = array.slice(index + 1, array.length);
-            return [movieName.join(' '), directorName.join(' ')];
+    total.forEach(info => {
+        if (info.hasOwnProperty('name') && info.hasOwnProperty('date') && info.hasOwnProperty('director')) {
+            console.log(JSON.stringify(info))
         }
-    }
+    });
 
-    function getMovieDate(array) {
-        const SECOND_SUBSTRING = 'onDate';
-        if (array.includes(SECOND_SUBSTRING)) {
-            let movieDate = array.pop();
-            let index = array.indexOf(SECOND_SUBSTRING);
-            let movieName = array.slice(0, index);
-            return [movieName.join(' '), movieDate];
-        }
+    function takeInfoByIndex(array, keyWord) {
+        let index = array.indexOf(keyWord);
+        let beforeKeyWord = array.slice(0, index).join(' ');
+        let afterKeyWord = array.slice(index + 1, array.length).join(' ');
+        return [beforeKeyWord, afterKeyWord];
     }
 }
 
@@ -65,3 +53,12 @@ movies([
     'Fast and Furious directedBy Rob Cohen'
 ]
 );
+
+// movies([
+//     'addMovie The Avengers',
+//     'addMovie Superman',
+//     'The Avengers directedBy Anthony Russo',
+//     'The Avengers onDate 30.07.2010',
+//     'Captain America onDate 30.07.2010',
+//     'Captain America directedBy Joe Russo'
+// ]);
