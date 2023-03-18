@@ -10,7 +10,7 @@ function deleteByEmail() {
         foundElement.parentElement.remove();
         result.textContent = 'Deleted.'
     } else {
-        result.textContent = 'Not found';
+        result.textContent = 'Not found.';
     }
 }
 
@@ -25,7 +25,7 @@ function deleteByEmail() {
             email.parentElement.remove();
             result.textContent = 'Deleted.';
         } else {
-            result.textContent = 'Not found';
+            result.textContent = 'Not found.';
         }
     }
 }
