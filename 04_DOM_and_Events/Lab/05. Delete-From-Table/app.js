@@ -1,3 +1,5 @@
+// FIRST VAR
+
 function deleteByEmail() {
     const input = document.querySelector('input[name = "email"');
     const evenTds = Array.from(document.querySelectorAll('td:nth-child(even)'));
@@ -11,6 +13,8 @@ function deleteByEmail() {
         result.textContent = 'Not found';
     }
 }
+
+// SECOND VAR
 
 function deleteByEmail() {
     const emailsInput = Array.from(document.querySelectorAll('td:nth-child(even)'));
