@@ -1,12 +1,21 @@
 function lockedProfile() {
-    const firstUserInfo = Array.from(document.getElementById('user1HiddenFields').children);
-    const secondUserInfo = Array.from(document.getElementById('user2HiddenFields').children);
-    const thirdUserInfo = Array.from(document.getElementById('user3HiddenFields').children);
     const allButtons = Array.from(document.querySelectorAll('#main > div > button'));
-    
 
-    console.log(firstUserInfo);
-    console.log(secondUserInfo);
-    console.log(thirdUserInfo);
-    console.log(allButtons);
+    allButtons.forEach(button => {
+        button.addEventListener('click', unlockInfo);
+    });
+
+    function unlockInfo(e) {
+        const radioButton = Array.from(e.target.parentElement.children)[2];
+        const userInfo = Array.from(e.target.parentElement.children)[9];
+        const currentBtn = e.target;
+        
+        if (!radioButton.checked && currentBtn.textContent === 'Show more') {
+            userInfo.style.display = 'block';
+            currentBtn.textContent = 'Hide it';
+        } else if (!radioButton.checked && currentBtn.textContent === 'Hide it') {
+            userInfo.style.display = 'none';
+            currentBtn.textContent = 'Show more';
+        }
+    }
 }
