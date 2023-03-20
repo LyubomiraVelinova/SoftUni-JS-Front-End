@@ -1,17 +1,20 @@
 function solve() {
-   document.querySelector('#searchBtn').addEventListener('click', onClick);
-
-   function onClick() {
-      const inputText = document.getElementById('searchField');
-      const allRows = Array.from(document.querySelectorAll('tbody > tr td'));
-      allRows.forEach(row => {
-         
-         if (row.textContent === inputText.value) {
-            row.parentElement.classList.add('select');
-         }
-         
-      });
-      row.parentElement.classList.remove('select');
-      inputText.value = '';
+      const searchInput = document.getElementById('searchField');
+      document.querySelector('#searchBtn').addEventListener('click', onClick);
+   
+      function onClick() {
+         const searchedWord = searchInput.value;
+         const tableRows = Array.from(document.querySelectorAll('tbody > tr'));
+         tableRows.forEach(row => {
+            let trimmedTextContent = row.textContent.trim();
+            // row.classList.remove('select');
+            if (row.classList.contains('select')){
+               row.classList.remove('select');
+            }
+            if (trimmedTextContent.includes(searchedWord)) {
+               row.classList.add('select');
+            }
+         });
+         searchInput.value = '';
+      }
    }
-}

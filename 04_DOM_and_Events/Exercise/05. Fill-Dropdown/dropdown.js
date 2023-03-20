@@ -1,13 +1,13 @@
 function addItem() {
-    const text = document.getElementById('newItemText');
-    const value = document.getElementById('newItemValue');
+    const textInput = document.getElementById('newItemText');
+    const valueInput = document.getElementById('newItemValue');
     const select = document.getElementById('menu');
 
     let option = document.createElement('option');
-    option.textContent = text.value;
-    option.value = value.value;
+    option.textContent = textInput.value;
+    option.value = valueInput.value;
 
     select.appendChild(option);
-    text.value = '';
-    value.value = '';
+    textInput.value = '';
+    valueInput.value = '';
 }

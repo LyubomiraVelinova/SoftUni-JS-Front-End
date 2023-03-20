@@ -8,7 +8,8 @@ function lockedProfile() {
     function unlockInfo(e) {
         const radioButton = Array.from(e.target.parentElement.children)[2];
         const userInfo = Array.from(e.target.parentElement.children)[9];
-        const currentBtn = e.target;
+        // this === e.currentTarget;
+        const currentBtn = e.target; 
         
         if (!radioButton.checked && currentBtn.textContent === 'Show more') {
             userInfo.style.display = 'block';
