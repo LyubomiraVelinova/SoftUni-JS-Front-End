@@ -1,3 +1,5 @@
 function solve() {
-  //TODO
+  const textArea = document.getElementById('input');
+  let countSentences = textArea.value.split('.');
+  console.log(countSentences)
 }
