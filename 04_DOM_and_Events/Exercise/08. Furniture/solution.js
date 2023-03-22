@@ -9,10 +9,10 @@ function solve() {
 
   function generateHandler() {
     const data = JSON.parse(generateTextArea.value);
-    for (const {img, name, price, decFactor} of data) {
+    for (const { img, name, price, decFactor } of data) {
       const tableRow = createDomElements('tr', '', tbody);
       const firstColumnTd = createDomElements('td', '', tableRow);
-      createDomElements('img', '', firstColumnTd, '', '', {src: img});
+      createDomElements('img', '', firstColumnTd, '', '', { src: img });
       const secondColumnTd = createDomElements('td', '', tableRow);
       createDomElements('p', name, secondColumnTd);
       const thirdColumnTd = createDomElements('td', '', tableRow);
@@ -20,7 +20,7 @@ function solve() {
       const fourthColumnTd = createDomElements('td', '', tableRow);
       createDomElements('p', decFactor, fourthColumnTd);
       const fifthColumnTd = createDomElements('td', '', tableRow);
-      createDomElements('input', '', fifthColumnTd, '', '', {type: 'checkbox'});
+      createDomElements('input', '', fifthColumnTd, '', '', { type: 'checkbox' });
     }
   }
 
@@ -48,48 +48,50 @@ function solve() {
     resultTextArea.value += `\n` + `Total price: ${totalPrice.toFixed(2)}`
     resultTextArea.value += `\n` + `Average decoration factor: ${totalDecorationFactor / count}`
   }
-}
 
-// type: string
-// content: string
-// id: string
-// classes: array of strings
-// attributes: object
-function createDomElements(type, content, parentNode, id, classes, attributes) {
-  const htmlElement = document.createElement(type);
+  // type: string
+  // content: string
+  // id: string
+  // classes: array of strings
+  // attributes: object
+  function createDomElements(type, content, parentNode, id, classes, attributes) {
+    const htmlElement = document.createElement(type);
 
-  if (content && type !== 'input' && type !== 'textArea'){
-    htmlElement.textContent = content;
-  }
-
-  if (content && type === 'input'){
-    htmlElement.value = content;
-  }
-
-  if (content && type === 'textArea'){
-    htmlElement.value = content;
-  }
-
-  if (parentNode) {
-    parentNode.appendChild(htmlElement);
-  }
-
-  if (id) {
-    htmlElement.id = id;
-  }
-
-  if (classes) {
-    htmlElement.classList.add(...classes);
-  }
-
-  if (attributes) {
-    for (const key in attributes) {
-      htmlElement.setAttribute(key, attributes[key]);
+    if (content && type !== 'input' && type !== 'textArea') {
+      htmlElement.textContent = content;
     }
-  }
 
-  return htmlElement;
+    if (content && type === 'input') {
+      htmlElement.value = content;
+    }
+
+    if (content && type === 'textArea') {
+      htmlElement.value = content;
+    }
+
+    if (parentNode) {
+      parentNode.appendChild(htmlElement);
+    }
+
+    if (id) {
+      htmlElement.id = id;
+    }
+
+    if (classes) {
+      htmlElement.classList.add(...classes);
+    }
+
+    if (attributes) {
+      for (const key in attributes) {
+        htmlElement.setAttribute(key, attributes[key]);
+      }
+    }
+
+    return htmlElement;
+  }
 }
+
+
 
 // SECOND VAR
 
