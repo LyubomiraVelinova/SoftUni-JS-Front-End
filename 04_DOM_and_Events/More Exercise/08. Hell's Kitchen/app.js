@@ -1,35 +1,74 @@
-// function solve() {
-//    document.querySelector('#btnSend').addEventListener('click', onClick);
+function solve() {
+   document.querySelector('#btnSend').addEventListener('click', onClick);
 
-//    function onClick () {
-//       const inputs = document.getElementById('inputs');
-//       const textArea = inputs.children[1];
-//       const outputs = document.getElementById('outputs');
-//       const bestRestaurantResult = document.getElementById('bestRestaurant').children[2];
-//       const workersResult = document.getElementById('workers').children[2];
-//       let restaurants = textArea.value;
+   function onClick() {
+      const textAreaInput = document.getElementById('inputs').children[1];
+      const input = Array.from(JSON.parse(textAreaInput.value));
 
+      const bestRestaurantResult = document.getElementById('bestRestaurant').children[2];
+      const workersResult = document.getElementById('workers').children[2];
 
-//       bestRestaurantResult.textContent = `Name: ${name} Average Salary: ${avgSalary} Best Salary: ${bestSalary}`
-//       workersResult.textContent = `Name: ${workerName} With Salary: ${workerSalary} Name: ${worker2name} With Salary: ${worker2 salary} Name: ${worker3 name} With Salary: ${worker3 salary}…`
-//    }
-// }
+      let biggestAverageSalary = 0;
+      let biggestSalary = 0;
+      let bestRestaurantName = '';
+      let workers = null;
 
-function solve(array) {
-   array.forEach(res => {
-      let restaurantName = res.split(' - ')[0];
-      let workers = res.split(' - ')[1].split(', ')
-      let restaurantObj = {};
-      let workersObj = {};
-      workers.forEach((line) => {
-         let [person, salary]  = line.split(' ');
-         salary = Number (salary);
-         workersObj[person] = Number(salary)
+      input.forEach((res) => {
+         let [restaurantName, workersString] = res.split(' - ');
+         let workers = workersString.split(', ');
+         let workersObj = {};
+
+         workers.forEach((line) => {
+            let [person, salary] = line.split(' ');
+            workersObj[person] = Number(salary);
+         });
+         let totalSalaries = Object.values(workersObj).reduce((a, b) => a + b, 0);
+         let averageSalary = totalSalaries / Object.keys(workersObj).length;
+
+         if (averageSalary > biggestAverageSalary) {
+            biggestAverageSalary = averageSalary;
+            biggestSalary = Math.max(...Object.values(workersObj));
+            bestRestaurantName = restaurantName;
+            workers = workersObj;
+         }
       });
-      
-      restaurantObj[restaurantName] = workersObj
-      console.log(restaurantObj)
-   });
+
+      bestRestaurantResult.textContent = `Name: ${bestRestaurantName} Average Salary: ${biggestAverageSalary.toFixed(2)} Best Salary: ${biggestSalary.toFixed(2)}`;
+      let bestRestaurantWorkers = ''
+      console.log(workers)
+      for (const worker in workers) {
+         bestRestaurantWorkers += `Name: ${worker} With Salary: ${workers[worker]} `
+      }
+      console.log(bestRestaurantWorkers)
+      workersResult.textContent = bestRestaurantWorkers;
+   }
 }
 
-solve(["PizzaHut - Peter 500, George 300, Mark 800", "TheLake - Bob 1300, Joe 780, Jane 660"])
+// function solve(array) {
+//    let biggestAverageSalary = 0;
+//    let biggestSalary = 0;
+//    let bestRestaurantName = '';
+//    let workers = [];
+
+//    array.forEach(res => {
+//       let [restaurantName, workersString] = res.split(' - ');
+//       let workers = workersString.split(', ');
+//       let workersObj = {};
+
+//       workers.forEach((line) => {
+//          let [person, salary] = line.split(' ');
+//          workersObj[person] = Number(salary);
+//       });
+//       let totalSalaries = Object.values(workersObj).reduce((a, b) => a + b, 0);
+//       let averageSalary = totalSalaries / Object.keys(workersObj).length;
+
+//       if (averageSalary > biggestAverageSalary) {
+//          biggestAverageSalary = averageSalary;
+//          biggestSalary = Math.max(...Object.values(workersObj));
+//          bestRestaurantName = restaurantName;
+//       }
+//    });
+//    console.log(`Name: ${bestRestaurantName} Average Salary: ${biggestAverageSalary.toFixed(2)} Best Salary: ${biggestSalary.toFixed(2)} `);
+// }
+
+// solve(["PizzaHut - Peter 500, George 300, Mark 800", "TheLake - Bob 1300, Joe 100, Jane 200"])
