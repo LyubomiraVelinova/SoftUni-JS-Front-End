@@ -8,44 +8,43 @@ function attachEvents() {
     const postBody = document.getElementById('post-body');
     const postComments = document.getElementById('post-comments');
 
-
+    let getPosts = {};
     btnLoadPosts.addEventListener('click', async () => {
 
         const response = await fetch(POST_URL);
         const postsData = await response.json();
-
+        postsInputs.innerHTML = '';
         for (const key in postsData) {
+
+            if (!(key in getPosts)) {
+                getPosts[key] = postsData[key].body;
+            }
             const option = document.createElement('option');
             option.value = key;
             option.textContent = postsData[key].title;
             postsInputs.appendChild(option);
         }
+    });
 
-        btnViewPost.addEventListener('click', async () => {
-            const res = await fetch(COMMENTS_URL);
-            const commentsData = await res.json();
-            let selectedPostId = postsInputs.options[postsInputs.selectedIndex].value;
-            let selectedPostTitle = postsData[selectedPostId].title;
-            let selectedPostBody = postsData[selectedPostId].body;
-            let allComments = [];
-            for (const key in commentsData) {
-                if (commentsData[key].postId === selectedPostId) {
-                    if (postTitle.textContent === 'Post Details') {
-                        postTitle.textContent = selectedPostTitle;
-                    }
-                    if (postBody.textContent === '') {
-                        postBody.textContent = selectedPostBody;
-                    }
-                    allComments.push(commentsData[key].text);
-                }
-            }
+    btnViewPost.addEventListener('click', async () => {
+        const res = await fetch(COMMENTS_URL);
+        const commentsData = await res.json();
+        postComments.innerHTML = '';
 
-            allComments.forEach(comment => {
+        let selectedPostId = postsInputs.options[postsInputs.selectedIndex].value;
+        let selectedPostTitle = postsInputs.options[postsInputs.selectedIndex].textContent;
+        let selectedPostBody = getPosts[selectedPostId];
+        postTitle.textContent = selectedPostTitle;
+        postBody.textContent = selectedPostBody;
+
+        for (const key in commentsData) {
+            if (commentsData[key].postId === selectedPostId) {
                 const liItem = document.createElement('li');
-                liItem.textContent = comment;
+                liItem.setAttribute('id', key)
+                liItem.textContent = commentsData[key].text;
                 postComments.appendChild(liItem);
-            });
-        });
+            }
+        }
     });
 }
 
