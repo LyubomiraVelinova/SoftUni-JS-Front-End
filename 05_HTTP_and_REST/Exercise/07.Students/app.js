@@ -8,63 +8,45 @@ function attachEvents() {
 
   listStudents();
 
-  function addNewStudent() {
-    tbody.innerHTML = ''
-    const firstName = firstNameInput.value;
-    const lastName = lastNameInput.value;
-    const facultyNumber = facultyNumInput.value;
-    const grade = gradeInput.value;
-    if (firstName !== '' && lastName !== '' && facultyNumber !== '' && grade !== '') {
-      fetch(BASE_URL, {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, facultyNumber, grade })
-      })
-      listStudents();
+  async function listStudents() {
+    try {
+      tbody.innerHTML = ''
+      const response = await fetch(BASE_URL);
+      const data = await response.json();
+      const students = Object.values(data);
+      students.forEach(student => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+              <td>${student.firstName}</td>
+              <td>${student.lastName}</td>
+              <td>${student.facultyNumber}</td>
+              <td>${student.grade}</td>
+              `;
+        tbody.appendChild(tr);
+      });
+    } catch (e) {
     }
   }
 
-  // function checkCorrectInputs() {
-  //   for (const item of inputs) {
-  //     if (!item.value.trim()) {
-  //       return false
-  //     }
-  //   }
-  //   return true
-  // }
+  async function addNewStudent() {
+    try {
+      tbody.innerHTML = ''
+      const firstName = firstNameInput.value;
+      const lastName = lastNameInput.value;
+      const facultyNumber = facultyNumInput.value;
+      const grade = gradeInput.value;
+      const httpHeaders = {
+        method: 'POST',
+        body: JSON.stringify({ firstName, lastName, facultyNumber, grade })
+      }
 
-  // List students with GET request
-  function listStudents() {
-    tbody.innerHTML = ''
-    fetch(BASE_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        let students = Object.values(data);
-        students.forEach(student => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td>${student.firstName}</td>
-            <td>${student.lastName}</td>
-            <td>${student.facultyNumber}</td>
-            <td>${student.grade}</td>
-            `;
-          tbody.appendChild(tr);
-        });
-      })
+      if (firstName !== '' && lastName !== '' && facultyNumber !== '' && grade !== '') {
+        const response = await fetch(BASE_URL, httpHeaders)
+        listStudents();
+      }
+    } catch (e) {
+    }
   }
-
-  // function createNewStudent() {
-  //   if (!checkCorrectInputs()) {
-  //     return
-  //   }
-
-  //   
-  //   listStudents();
-  //   firstNameInput.value = null;
-  //   lastNameInput.value = null;
-  //   facultyNumInput.value = null;
-  //   gradeInput.value = null;
-  // }
 }
 
 attachEvents();
