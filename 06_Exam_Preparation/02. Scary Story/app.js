@@ -6,22 +6,39 @@ function solve() {
 
 function createElement(type, parentNode, content, classes, id, attributes, useInnerHtml) {
 
-  const htmlElement
+  const htmlElement = document.createElement(type);
 
   if (content && useInnerHtml) {
-    HTMLElement.innerHTML = content;
+    htmlElement.innerHTML = content;
   } else {
-    if (content && type !== 'input') {
-      HTMLElement.textContent = content;
+    if (content && type !== 'input' && type !== 'textArea') {
+      htmlElement.textContent = content;
     }
 
-    if (content && type === 'input') {
-      HTMLElement.value = content;
+    if (content && (type === 'input' || type === 'textArea')) {
+      htmlElement.value = content;
     }
   }
 
   if (classes && classes.length > 0) {
-    HTMLElement.id = id;
+    htmlElement.classList.add(...classes); 
   }
+
+  if (id) {
+    htmlElement.id = id;
+  }
+
+  // { src: 'link', href: 'http'}
+  if (attributes) {
+    for (const key in attributes) {
+      htmlElement.setAttribute(key, attributes[key]);
+    }
+  }
+
+  if (parentNode) {
+    parentNode.appendChild(htmlElement);
+  }
+
+  return htmlElement;
 
 }
