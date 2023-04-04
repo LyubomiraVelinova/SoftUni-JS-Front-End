@@ -1,74 +1,3 @@
-// TODO
-// function attachEvents() {
-//     const BASE_URL = 'http://localhost:3030/jsonstore/tasks/'
-//     const loadBtn = document.getElementById('load-button');
-//     const addBtn = document.getElementById('add-button');
-//     const ul = document.getElementById('todo-list');
-//     const title = document.getElementById('title');
-
-//     loadBtn.addEventListener('click', tasksHandler);
-//     loadBtn.addEventListener('click', addNewTask);
-
-//     const dataContainer = {};
-//     async function tasksHandler() {
-//         try {
-//             const response = await fetch(BASE_URL);
-//             const data = await response.json();
-
-//             for (const { name, _id } of Object.values(data)) {
-//                 dataContainer[name] = _id
-//                 const li = createElement('li', ul);
-//                 createElement('span', li, name);
-//                 const removeBtn = createElement('button', li, 'Remove');
-//                 const editBtn = createElement('button', li, 'Edit');
-
-//                 removeBtn.addEventListener('click', removeTaskHandler);
-//             }
-//             console.log(dataContainer)
-//         } catch (e) {
-//         }
-//     }
-
-//     async function addNewTask() {
-//         try {
-//             ul.innerHTML = ''
-//             const name = title.value;
-//             const httpHeaders = {
-//                 method: 'POST',
-//                 body: JSON.stringify({ name }),
-//             }
-//             const response = await fetch(BASE_URL, httpHeaders);
-//             tasksHandler();
-//         } catch (e) {
-//         }
-
-//     }
-
-//     function removeTaskHandler(e) {
-//         const btn = e.currentTarget;
-//         console.log(btn.textContent)
-//         const currentName = btn.parentNode
-//         console.log(currentName.children[0].textContent)
-//     }
-
-//     function createElement(type, parentNode, content) {
-//         const htmlElement = document.createElement(type);
-
-//         if (content && type !== 'input' && type !== 'textArea') {
-//             htmlElement.textContent = content;
-//         }
-//         if (content && (type === 'input' || type === 'textArea')) {
-//             htmlElement.value = content;
-//         }
-//         if (parentNode) {
-//             parentNode.appendChild(htmlElement);
-//         }
-
-//         return htmlElement;
-//     }
-// }
-
-
 function attachEvents() {
     const BASE_URL = 'http://localhost:3030/jsonstore/tasks/'
     const loadBtn = document.getElementById('load-button');
@@ -78,7 +7,7 @@ function attachEvents() {
 
     // Event Listeners to the buttons
     loadBtn.addEventListener('click', loadTasksHandler);
-    addBtn.addEventListener('click', addNewTask);
+    addBtn.addEventListener('click', addNewTaskHandler);
 
 
     const dataContainer = {};
@@ -87,7 +16,7 @@ function attachEvents() {
         if (event) {
             event.preventDefault();
         }
-        
+
         listContainer.innerHTML = '';
         fetch(BASE_URL)
             .then((res) => res.json())
@@ -108,7 +37,7 @@ function attachEvents() {
             .catch((err) => console.error(err))
     }
 
-    async function addNewTask(event) {
+    async function addNewTaskHandler(event) {
         event.preventDefault();
         try {
             const name = titleInput.value;
@@ -127,6 +56,8 @@ function attachEvents() {
         const currentLi = event.currentTarget.parentNode;
         const currentName = currentLi.children[0].textContent;
         const currentId = dataContainer[currentName];
+        // OR 
+        // const currentId = event.currentTarget.parentNode.id;
         const url = `${BASE_URL}${currentId}`
         const httpHeaders = {
             method: 'DELETE',
@@ -163,9 +94,9 @@ function attachEvents() {
             body: JSON.stringify({ name: currentName })
         }
         fetch(url, httpHeaders)
-        .then(() => loadTasksHandler(event))
-        .catch((err) => console.error(err))
-        
+            .then(() => loadTasksHandler(event))
+            .catch((err) => console.error(err))
+
     }
 
     function createElement(type, parentNode, content) {
@@ -184,13 +115,5 @@ function attachEvents() {
         return htmlElement;
     }
 }
-
-// 
-// }
-
-
-
-
-
 
 attachEvents();
