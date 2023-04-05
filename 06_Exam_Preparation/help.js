@@ -72,8 +72,16 @@ const inputDOMSelectors = {
     authorInput: 'author',
     dateInput: 'date',
 }
-const {genreInput, nameInput, authorInput, dateInput} = inputDOMSelectors;
+const { genreInput, nameInput, authorInput, dateInput } = inputDOMSelectors;
 // console.log(genreInput)  --> //genre
 // console.log(genreInput)  --> //name
 // console.log(genreInput)  --> //author
 // console.log(genreInput)  --> //date
+
+// CLEAR ALL INPUTS
+function clearAllInputs() {
+    Object.values(inputDOMSelectors)
+        .forEach((input) => {
+            input.value = '';
+        })
+}

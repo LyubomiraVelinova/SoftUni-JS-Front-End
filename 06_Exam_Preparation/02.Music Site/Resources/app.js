@@ -25,14 +25,6 @@ function solve() {
             return;
         }
 
-        // const content = `        
-        // <img src = "./static/img/img.png">
-        // <h2>Genre: ${inputDOMSelectors.genreInput.value}</h2>
-        // <h2>Name: ${inputDOMSelectors.nameInput.value}</h2>
-        // <h2>Author: ${inputDOMSelectors.authorInput.value}</h2>
-        // <h3>Date: ${inputDOMSelectors.dateInput.value}</h3>
-        // `
-
         // DOM MANIPULATIONS
         const hitsInfoContainer = createElement('div', allHitsContainer, null, ['hits-info']);
         createElement('img', hitsInfoContainer, null, null, { src: './static/img/img.png' });
@@ -46,14 +38,21 @@ function solve() {
         likeBtn.addEventListener('click', totalLikesHandler);
         const deleteBtn = createElement('button', hitsInfoContainer, `Delete`, ['delete-btn']);
         deleteBtn.addEventListener('click', deleteSongHandler);
-        
+
         // DELETE INPUTS
+        // function clearAllInputs() {
+        //     Object.values(inputDOMSelectors)
+        //     .forEach((input) => {
+        //         input.value = '';
+        //     })
+        // }
+        
         for (const input of Object.values(inputDOMSelectors)) {
             input.value = '';
         }
 
         function totalLikesHandler() {
-            totalLikesCounter ++;
+            totalLikesCounter++;
             likeBtn.disabled = true
             totalLikes.textContent = `Total Likes: ${totalLikesCounter}`;
         }
