@@ -85,3 +85,17 @@ function clearAllInputs() {
             input.value = '';
         })
 }
+
+// EVENT PREVENT DEFAULT
+if (event) {
+    event.preventDefault();
+}
+
+// PATCH EXAMPLE
+const httpHeaders = {
+    method: 'PATCH',
+    body: JSON.stringify({ name: currentName })
+}
+fetch(url, httpHeaders)
+    .then(() => loadTasksHandler(event))
+    .catch((err) => console.error(err))
