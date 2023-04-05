@@ -10,7 +10,7 @@ function inputValidator() {
         storyInput: document.getElementById('story'),
     }
 
-    // SECOND STEP - Convert object into array and check wether every input is not empty
+    // SECOND STEP - Convert object into array and check wether every input is not empty(this should be in the function with some event)
     const allFieldsHaveValue = Object.values(inputDOMSelectors)
         .every((input) => input.value !== '');
 
@@ -64,3 +64,16 @@ function removeTaskHandler() {
         .then(() => loadTasksHandler())
         .catch(handleError)
 }
+
+// OBJECT DESTRUCTING
+const inputDOMSelectors = {
+    genreInput: 'genre',
+    nameInput: 'name',
+    authorInput: 'author',
+    dateInput: 'date',
+}
+const {genreInput, nameInput, authorInput, dateInput} = inputDOMSelectors;
+// console.log(genreInput)  --> //genre
+// console.log(genreInput)  --> //name
+// console.log(genreInput)  --> //author
+// console.log(genreInput)  --> //date

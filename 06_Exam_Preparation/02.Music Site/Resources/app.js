@@ -2,10 +2,9 @@ window.addEventListener('load', solve);
 
 function solve() {
     const addBtn = document.getElementById('add-btn');
-    console.log(addBtn)
     const allHitsContainer = document.querySelector('#all-hits > div');
-
-    addBtn.addEventListener('click', songsCollectionHandler);
+    const savedSongs = document.querySelector('#saved-hits > div');
+    const totalLikes = document.querySelector('#total-likes > div > p');
 
     const inputDOMSelectors = {
         genreInput: document.getElementById('genre'),
@@ -13,46 +12,69 @@ function solve() {
         authorInput: document.getElementById('author'),
         dateInput: document.getElementById('date'),
     }
-    // const allFieldsHaveValue = Object.values(inputDOMSelectors)
-    //     .every((input) => input.value !== null);
-    // console.log(Object.values(inputDOMSelectors))
-    // if (!allFieldsHaveValue) {
-    //     console.log('Empty field');
-    //     return;
-    // }
 
-    function songsCollectionHandler() {
-        console.log('hjy')
-    //     const content = `
-    //     <img src = "./static/img/img.png">
-    //     <h2>Genre: ${inputDOMSelectors[genreInput].value}</h2>
-    //     <h2>Name: ${inputDOMSelectors[nameInput].value}</h2>
-    //     <h2>Author: ${inputDOMSelectors[authorInput].value}</h2>
-    //     <h3>Date: ${inputDOMSelectors[dateInput].value}</h3>
-    // `
-        const hitsInfoContainer = document.createElement('div');
-        hitsInfoContainer.classList.add('hits-info');
+    addBtn.addEventListener('click', songsCollectionHandler);
+    let totalLikesCounter = 0;
+    function songsCollectionHandler(event) {
+        event.preventDefault();
+        // VALIDATION
+        const allFieldsHaveValue = Object.values(inputDOMSelectors)
+            .every((input) => input.value !== '');
+        if (!allFieldsHaveValue) {
+            console.log('Empty field');
+            return;
+        }
 
-        // const hitsInfoContainer = createElement('div', allHitsContainer, content, ['hits-info']);
-        hitsInfoContainer.innerHTML = `
-            <img src = "./static/img/img.png">
-            <h2>Genre: ${inputDOMSelectors[genreInput].value}</h2>
-            <h2>Name: ${inputDOMSelectors[nameInput].value}</h2>
-            <h2>Author: ${inputDOMSelectors[authorInput].value}</h2>
-            <h3>Date: ${inputDOMSelectors[dateInput].value}</h3>
-        `
-        console.log(hitsInfoContainer)
-        allHitsContainer.appendChild(hitsInfoContainer);
-        // const img = document.createElement('img');
-        // img.setAttribute('src', '06_Exam_Preparation\02.Music Site\Resources\static\img\img.png');
+        // const content = `        
+        // <img src = "./static/img/img.png">
+        // <h2>Genre: ${inputDOMSelectors.genreInput.value}</h2>
+        // <h2>Name: ${inputDOMSelectors.nameInput.value}</h2>
+        // <h2>Author: ${inputDOMSelectors.authorInput.value}</h2>
+        // <h3>Date: ${inputDOMSelectors.dateInput.value}</h3>
+        // `
 
+        // DOM MANIPULATIONS
+        const hitsInfoContainer = createElement('div', allHitsContainer, null, ['hits-info']);
+        createElement('img', hitsInfoContainer, null, null, { src: './static/img/img.png' });
+        createElement('h2', hitsInfoContainer, `Genre: ${inputDOMSelectors.genreInput.value}`);
+        createElement('h2', hitsInfoContainer, `Name: ${inputDOMSelectors.nameInput.value}`);
+        createElement('h2', hitsInfoContainer, `Author: ${inputDOMSelectors.authorInput.value}`);
+        createElement('h3', hitsInfoContainer, `Date: ${inputDOMSelectors.dateInput.value}`);
+        const saveBtn = createElement('button', hitsInfoContainer, `Save song`, ['save-btn']);
+        saveBtn.addEventListener('click', savedSongHandler);
+        const likeBtn = createElement('button', hitsInfoContainer, `Like song`, ['like-btn']);
+        likeBtn.addEventListener('click', totalLikesHandler);
+        const deleteBtn = createElement('button', hitsInfoContainer, `Delete`, ['delete-btn']);
+        deleteBtn.addEventListener('click', deleteSongHandler);
+        
+        // DELETE INPUTS
+        for (const input of Object.values(inputDOMSelectors)) {
+            input.value = '';
+        }
+
+        function totalLikesHandler() {
+            totalLikesCounter ++;
+            likeBtn.disabled = true
+            totalLikes.textContent = `Total Likes: ${totalLikesCounter}`;
+        }
+
+        function savedSongHandler() {
+            savedSongs.appendChild(hitsInfoContainer);
+            saveBtn.remove();
+            likeBtn.remove();
+        }
+
+        function deleteSongHandler(event) {
+            const currentContainer = event.currentTarget.parentNode;
+            currentContainer.remove();
+        }
     }
 
-    function createElement(type, parentNode, content, classes, id, attributes, useInnerHtml) {
+    function createElement(type, parentNode, content, classes, attributes) {
 
         const htmlElement = document.createElement(type);
 
-        if (content && useInnerHtml) {
+        if (content) {
             htmlElement.innerHTML = content;
         } else {
             if (content && type !== 'input' && type !== 'textArea') {
@@ -68,9 +90,6 @@ function solve() {
             htmlElement.classList.add(...classes);
         }
 
-        if (id) {
-            htmlElement.id = id;
-        }
 
         // { src: 'link', href: 'http'}
         if (attributes) {
