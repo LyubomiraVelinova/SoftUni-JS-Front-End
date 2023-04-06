@@ -99,3 +99,60 @@ const httpHeaders = {
 fetch(url, httpHeaders)
     .then(() => loadTasksHandler(event))
     .catch((err) => console.error(err))
+
+// How to save items from GEt request outside function
+const currentProducts = [];
+function productsHandler() {
+    fetch(BASE_URL)
+        .then((res) => res.json())
+        .then((allProductsRes) => {
+            currentProducts = Object.values(allProductsRes);
+            for (const { product, count, price, _id } of currentProducts) {
+                pass
+            }
+        })
+}
+
+// DOM task with form which has to be updated- collecting all inputs in outer object
+const inputDOMSelectors = {
+    firstName: document.getElementById('first-name'),
+    lastName: document.getElementById('last-name'),
+    age: document.getElementById('age'),
+    title: document.getElementById('story-title'),
+    genre: document.getElementById('genre'),
+    story: document.getElementById('story'),
+}
+
+let inputsContainer = {
+    // firstName: null,
+    // lastName: null,
+    // age: null,
+    // title: null,
+    // genre: null,
+    // story: null,
+};
+
+for (const key in inputDOMSelectors) {
+    inputsContainer[key] = inputDOMSelectors[key].value;
+}
+
+// OR
+const { firstName, lastName, age, title, genre, story } = inputDOMSelectors;
+inputsContainer = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    age: age.value,
+    title: title.value,
+    genre: genre.value,
+    story: story.value,
+}
+
+inputDOMSelectors.firstName.value = inputsContainer.firstName;
+inputDOMSelectors.lastName.value = inputsContainer.lastName;
+inputDOMSelectors.age.value = inputsContainer.age;
+inputDOMSelectors.title.value = inputsContainer.storyTitle;
+inputDOMSelectors.story.value = inputsContainer.story;
+
+// FORM RESET
+const form = document.getElementById('form');
+form.reset();

@@ -22,8 +22,7 @@ async function loadProductsHandler(event) {
     try {
         const response = await fetch(BASE_URL);
         const products = await response.json();
-        for (const productLine of Object.values(products)) {
-            const { product, count, price, _id } = productLine
+        for (const { product, count, price, _id } of Object.values(products)) {
             const tr = createElement('tr', tbody);
             tr.setAttribute('id', _id);
             createElement('td', tr, product, ['name']);
