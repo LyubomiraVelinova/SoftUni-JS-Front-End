@@ -1,4 +1,4 @@
-function createElement(type, parentNode, content, classes, id, attributes, useInnerHtml) {
+function createElement(type, parentNode, classes, content, id, attributes, useInnerHtml) {
 
     const htmlElement = document.createElement(type);
 

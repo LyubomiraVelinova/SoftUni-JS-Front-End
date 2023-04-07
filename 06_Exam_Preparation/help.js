@@ -10,7 +10,7 @@ function inputValidator() {
         storyInput: document.getElementById('story'),
     }
 
-    // SECOND STEP - Convert object into array and check wether every input is not empty(this should be in the function with some event)
+    // SECOND STEP - Convert object into array and check wether every input is not empty(this should be in the function with some event)- this should be in click event function
     const allFieldsHaveValue = Object.values(inputDOMSelectors)
         .every((input) => input.value !== '');
 
