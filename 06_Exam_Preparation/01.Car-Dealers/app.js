@@ -11,9 +11,9 @@ function solve() {
   }
   const otherDOMSelectors = {
     publishBtn: document.getElementById('publish'),
-    infoContainer: document.getElementById('table-body'),
-    ulContainer: document.getElementById('cars-list'),
-    totalProfit: document.getElementById('profit'),
+    tableBody: document.getElementById('table-body'),
+    soldCars: document.getElementById('cars-list'),
+    profit: document.getElementById('profit'),
   }
 
   otherDOMSelectors.publishBtn.addEventListener('click', publishInputsHandler);
@@ -27,7 +27,7 @@ function solve() {
     for (const key in inputDOMSelectors) {
       inputsContainer[key] = inputDOMSelectors[key].value;
     }
-    const row = createElement('tr', otherDOMSelectors.infoContainer, null, ['row']);
+    const row = createElement('tr', otherDOMSelectors.tableBody, null, ['row']);
     createElement('td', row, inputsContainer.make);
     createElement('td', row, inputsContainer.model);
     createElement('td', row, inputsContainer.year);
@@ -49,36 +49,33 @@ function solve() {
     const currentRow = event.currentTarget.parentNode.parentNode;
     const [currentMake, currentModel, currentYear, currentFuel, currentCost, currentSellingPrice, _btn] = Array.from(currentRow.children);
     // console.log(Array.from(currentRow.children))
-    console.log(currentMake.value)
-    console.log(currentModel.value)
-    console.log(currentYear.value)
-    console.log(currentFuel.value)
-    console.log(currentCost.value)
-    console.log(currentSellingPrice.value)
+
     currentRow.remove()
 
-    // inputDOMSelectors['make'].value = currentMake.value;
-    // inputDOMSelectors['model'].value = currentModel.value;
-    // inputDOMSelectors['year'].value = currentYear.value;
-    // inputDOMSelectors['fuel'].value = currentFuel.value;
-    // inputDOMSelectors['originalCost'].value = currentCost.value;
-    // inputDOMSelectors['sellingPrice'].value = currentSellingPrice.value;
+    inputDOMSelectors['make'].value = currentMake.textContent;
+    inputDOMSelectors['model'].value = currentModel.textContent;
+    inputDOMSelectors['year'].value = currentYear.textContent;
+    inputDOMSelectors['fuel'].value = currentFuel.textContent;
+    inputDOMSelectors['originalCost'].value = currentCost.textContent;
+    inputDOMSelectors['sellingPrice'].value = currentSellingPrice.textContent;
 
     otherDOMSelectors.publishBtn.addEventListener('click', publishInputsHandler);
   }
 
   let total = 0;
-  function confirmationHandler() {
-    otherDOMSelectors.infoContainer.remove();
+  function confirmationHandler(event) {
+    currentRow = event.currentTarget.parentNode.parentNode;
+    const [currentMake, currentModel, currentYear, currentFuel, currentCost, currentSellingPrice, _btn] = Array.from(currentRow.children);
+    currentRow.remove();
 
-    const profit = Number(inputsContainer['sellingPrice']) - Number(inputsContainer['originalCost']);
-    const li = createElement('li', otherDOMSelectors.ulContainer, null, ['each-list']);
-    createElement('span', li, `${inputsContainer['make']} ${inputsContainer['model']}`);
-    createElement('span', li, inputsContainer['year']);
+    const profit = Number(currentSellingPrice.textContent) - Number(currentCost.textContent);
+    const li = createElement('li', otherDOMSelectors.soldCars, null, ['each-list']);
+    createElement('span', li, `${currentMake.textContent} ${currentModel.textContent}`);
+    createElement('span', li, currentYear.textContent);
     createElement('span', li, profit);
 
     total += profit;
-    otherDOMSelectors.totalProfit.textContent = total;
+    otherDOMSelectors.profit.textContent = total;
   }
 
   function inputValidation() {
