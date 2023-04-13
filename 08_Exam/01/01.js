@@ -84,7 +84,7 @@ function sprintReview(input) {
     function removeTask(assignee, index) {
         if (tasks.hasOwnProperty(assignee)) {
             let tasksCount = Object.keys(tasks[assignee]).length;
-            if (tasksCount > index) {
+            if (tasksCount > index && index >= 0) {
                 let currentTaskId = Object.keys(tasks[assignee])[index];
                 delete tasks[assignee][currentTaskId];
             } else {

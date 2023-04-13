@@ -43,7 +43,7 @@ function solve(input) {
             const [assignee, index] = tokens;
             if (board.hasOwnProperty(assignee)) {
                 const keysOfTasks = Object.keys(board[assignee]);
-                if (keysOfTasks.length > Number(index)) {
+                if (keysOfTasks.length > Number(index) && Number(index) >= 0) {
                     const currentTask = keysOfTasks[Number(index)];
                     delete board[assignee][currentTask];
                 } else {
