@@ -124,12 +124,12 @@ const inputDOMSelectors = {
 }
 
 let inputsContainer = {
-    // firstName: null,
-    // lastName: null,
-    // age: null,
-    // title: null,
-    // genre: null,
-    // story: null,
+    firstName: null,
+    lastName: null,
+    age: null,
+    title: null,
+    genre: null,
+    story: null,
 };
 
 for (const key in inputDOMSelectors) {
