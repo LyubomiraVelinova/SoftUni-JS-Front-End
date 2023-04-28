@@ -119,7 +119,6 @@ function solve() {
 
     function createElement(type, parent, classes, content, id) {
         const htmlElement = document.createElement(type);
-
         if (content && type !== 'input' && type !== 'textArea') {
             htmlElement.textContent = content;
         }
@@ -129,6 +128,7 @@ function solve() {
         if (classes && classes.length > 0) {
             htmlElement.classList.add(...classes);
         }
+        // If there is id
         if (id) {
             htmlElement.id = id;
         }
